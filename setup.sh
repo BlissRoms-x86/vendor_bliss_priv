@@ -3,6 +3,10 @@
 SOURCE_DIR="$PWD"
 TARGET_DIR="$SOURCE_DIR/proprietary"
 
+ASUS_VERSION="UL-K013-WW-12.10.1.36-user"
+BLUETOOTH_FIRMWARE="system/etc/firmware/BCM2076B1_002.002.004.0132.0141_reduced_2dB.hcd"
+ASUS_FILES="boot.img $BLUETOOTH_FIRMWARE"
+
 # Fail if an error occurs
 set -e
 
@@ -43,23 +47,25 @@ download houdini.sfs "http://goo.gl/JsoX2C" b126529f9d78b5b5b7f8c9ff650f6e71
 
 echo "Deleting old files"
 rm -rf "$TARGET_DIR"
-mkdir "$TARGET_DIR"
+mkdir -p "$TARGET_DIR/firmware"
 
 TEMP_DIR=`mktemp -d`
 cd "$TEMP_DIR"
 
-echo "Extracting boot image"
-unzip -q "$SOURCE_DIR/$ASUS_VERSION.zip" boot.img
+echo "Extracting files"
+unzip -q "$SOURCE_DIR/$ASUS_VERSION.zip" $ASUS_FILES
 
-echo "Extracting ramdisk"
+echo "Extracting boot ramdisk"
 python "$ANDROID_BUILD_TOP/system/core/mkbootimg/unpackbootimg" -i boot.img &> /dev/null || :
 
-echo "Unpacking ramdisk"
+echo "Unpacking boot ramdisk"
 mkdir ramdisk && cd ramdisk
 cat ../boot.img-ramdisk.gz | gunzip | cpio -Vid --quiet
+cd "$TEMP_DIR"
 
 echo "Copying files"
-cp sbin/upi_ug31xx "$TARGET_DIR"
+cp ramdisk/sbin/upi_ug31xx "$TARGET_DIR"
+cp "$BLUETOOTH_FIRMWARE" "$TARGET_DIR/firmware"
 
 cd "$SOURCE_DIR"
 rm -rf "$TEMP_DIR"
