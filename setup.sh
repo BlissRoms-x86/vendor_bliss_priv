@@ -1,11 +1,17 @@
 #!/usr/bin/env bash
 
-SOURCE_DIR="$PWD"
-TARGET_DIR="$SOURCE_DIR/proprietary"
+export SOURCE_DIR="$PWD"
+export TARGET_DIR="$SOURCE_DIR/proprietary"
 
-ASUS_VERSION="UL-K013-WW-12.10.1.36-user"
-BLUETOOTH_FIRMWARE="system/etc/firmware/BCM2076B1_002.002.004.0132.0141_reduced_2dB.hcd"
-ASUS_FILES="boot.img $BLUETOOTH_FIRMWARE"
+export ASUS_VERSION="UL-K013-WW-12.10.1.36-user"
+ASUS_DOWNLOAD="$ASUS_VERSION.zip"
+ASUS_DOWNLOAD_URL="http://dlcdnet.asus.com/pub/ASUS/EeePAD/ME176C/$ASUS_DOWNLOAD"
+ASUS_DOWNLOAD_MD5="60ba4a2068e4e8140a6c2accb7c83d19"
+
+export CHROMEOS_VERSION="chromeos_9460.73.0_reef_recovery_stable-channel_mp-v2"
+CHROMEOS_DOWNLOAD="$CHROMEOS_VERSION.bin.zip"
+CHROMEOS_DOWNLOAD_URL="https://dl.google.com/dl/edgedl/chromeos/recovery/$CHROMEOS_DOWNLOAD"
+CHROMEOS_DOWNLOAD_MD5="f9a1fa62667274ef0b20633c3bac65a5"
 
 # Fail if an error occurs
 set -e
@@ -42,41 +48,21 @@ echo "Downloading files..."
 
 # Original ASUS system
 ASUS_VERSION="UL-K013-WW-12.10.1.36-user"
-download "$ASUS_VERSION.zip" "http://dlcdnet.asus.com/pub/ASUS/EeePAD/ME176C/$ASUS_VERSION.zip" 60ba4a2068e4e8140a6c2accb7c83d19
-download houdini.sfs "http://goo.gl/JsoX2C" b126529f9d78b5b5b7f8c9ff650f6e71
+download "$ASUS_DOWNLOAD" "$ASUS_DOWNLOAD_URL" "$ASUS_DOWNLOAD_MD5"
+download "$CHROMEOS_DOWNLOAD" "$CHROMEOS_DOWNLOAD_URL" "$CHROMEOS_DOWNLOAD_MD5"
 
 echo "Deleting old files"
 rm -rf "$TARGET_DIR"
 mkdir -p "$TARGET_DIR/firmware"
 
-TEMP_DIR=`mktemp -d`
+export TEMP_DIR=`mktemp -d`
 cd "$TEMP_DIR"
 
-echo "Extracting files"
-unzip -q "$SOURCE_DIR/$ASUS_VERSION.zip" $ASUS_FILES
+echo "Processing $ASUS_DOWNLOAD"
+"$SOURCE_DIR/extract.asus.sh" "$SOURCE_DIR/$ASUS_DOWNLOAD"
 
-echo "Extracting boot ramdisk"
-python "$ANDROID_BUILD_TOP/system/core/mkbootimg/unpackbootimg" -i boot.img &> /dev/null || :
+echo "Processing $CHROMEOS_DOWNLOAD"
+"$SOURCE_DIR/extract.chromeos.sh" "$SOURCE_DIR/$CHROMEOS_DOWNLOAD"
 
-echo "Unpacking boot ramdisk"
-mkdir ramdisk && cd ramdisk
-cat ../boot.img-ramdisk.gz | gunzip | cpio -Vid --quiet
-cd "$TEMP_DIR"
-
-echo "Copying files"
-cp ramdisk/sbin/upi_ug31xx "$TARGET_DIR"
-cp "$BLUETOOTH_FIRMWARE" "$TARGET_DIR/firmware"
-
-cd "$SOURCE_DIR"
-rm -rf "$TEMP_DIR"
-
-echo "Patching files"
-
-# /config partition is used by configfs so we move it to /oemcfg
-sed -i 's@/config/@/oemcfg/@g' "$TARGET_DIR/upi_ug31xx"
-
-echo "Extracting native bridge"
-mkdir "$TARGET_DIR/houdini"
-unsquashfs -d "$TARGET_DIR/houdini/arm" houdini.sfs
-mv "$TARGET_DIR/houdini/arm/"{houdini,libhoudini.so} "$TARGET_DIR/houdini"
-
+rm -r "$TEMP_DIR"
+echo "Done"

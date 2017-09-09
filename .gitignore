@@ -1,4 +1,4 @@
 *
 !.gitignore
-!setup.sh
+!*.sh
 !*.mk
