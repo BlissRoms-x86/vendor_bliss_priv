@@ -24,13 +24,14 @@ sudo mount -r "chromeos/opt/google/containers/android/vendor.raw.img" vendor
 echo " -> Copying files"
 cd vendor
 
-# Native bridge
-mkdir -p "$TARGET_DIR/houdini"
-cp bin/houdini "$TARGET_DIR/houdini"
-cp -r lib/{libhoudini.so,arm} "$TARGET_DIR/houdini"
-
 # Widevine DRM
 cp lib/mediadrm/libwvdrmengine.so "$TARGET_DIR"
+
+# Native bridge
+mkdir -p "$TARGET_DIR/houdini/"{bin,etc,lib}
+cp bin/houdini "$TARGET_DIR/houdini/bin"
+cp -r etc/binfmt_misc "$TARGET_DIR/houdini/etc"
+cp -r lib/{libhoudini.so,arm} "$TARGET_DIR/houdini/lib"
 
 echo " -> Unmounting recovery image"
 cd "$TEMP_DIR"

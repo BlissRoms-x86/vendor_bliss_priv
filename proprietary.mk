@@ -9,10 +9,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/libwvdrmengine.so:system/vendor/lib/mediadrm/libwvdrmengine.so:widevine
 
-# Houdini
-LOCAL_PATH := $(LOCAL_PATH)/houdini
-
+# ARM Native bridge (Houdini)
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/houdini:system/bin/houdini:intel \
-    $(LOCAL_PATH)/libhoudini.so:system/lib/libhoudini.so:intel \
-    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/arm,system/lib/arm)
+    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/houdini,system)
