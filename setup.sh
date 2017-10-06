@@ -45,9 +45,6 @@ function download {
 }
 
 echo "Downloading files..."
-
-# Original ASUS system
-ASUS_VERSION="UL-K013-WW-12.10.1.36-user"
 download "$ASUS_DOWNLOAD" "$ASUS_DOWNLOAD_URL" "$ASUS_DOWNLOAD_MD5"
 download "$CHROMEOS_DOWNLOAD" "$CHROMEOS_DOWNLOAD_URL" "$CHROMEOS_DOWNLOAD_MD5"
 
