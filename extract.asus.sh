@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 BLUETOOTH_FIRMWARE="system/etc/firmware/BCM2076B1_002.002.004.0132.0141_reduced_2dB.hcd"
-ASUS_FILES="boot.img $BLUETOOTH_FIRMWARE"
+WIFI_NVRAM="system/etc/nvram.txt"
+ASUS_FILES="boot.img $BLUETOOTH_FIRMWARE $WIFI_NVRAM"
 
 # Fail if an error occurs
 set -e
@@ -20,6 +21,8 @@ cd "$TEMP_DIR"
 echo " -> Copying files"
 cp ramdisk/sbin/upi_ug31xx "$TARGET_DIR"
 cp "$BLUETOOTH_FIRMWARE" "$TARGET_DIR/firmware"
+mkdir "$TARGET_DIR/firmware/brcm"
+cp "$WIFI_NVRAM" "$TARGET_DIR/firmware/brcm/brcmfmac43362-sdio.txt"
 
 echo " -> Patching files"
 # /config partition is used by configfs so we move it to /oemcfg
