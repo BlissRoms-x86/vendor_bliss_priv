@@ -28,5 +28,5 @@ cp "$MEDIA_PROFILES" "$TARGET_DIR"
 cp "$BLUETOOTH_FIRMWARE" "$TARGET_DIR/firmware"
 
 echo " -> Patching files"
-# /config partition is used by configfs so we move it to /oemcfg
-sed -i 's@/config/@/oemcfg/@g' "$TARGET_DIR/upi_ug31xx"
+# /config partition is used by configfs so we move it to /vnddat (vendor data)
+sed -i 's@/config/@/vnddat/@g' "$TARGET_DIR/upi_ug31xx"
