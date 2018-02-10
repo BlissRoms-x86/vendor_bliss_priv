@@ -16,11 +16,6 @@ CHROMEOS_DOWNLOAD_MD5="fb1b746a3e41e03c76dc0046cb6e918e"
 # Fail if an error occurs
 set -e
 
-if [ -z "$ANDROID_BUILD_TOP" ]; then
-    echo "Please run 'source build/envsetup.sh' before running this script."
-    exit 1
-fi
-
 function download {
     file="$1"
     url="$2"

@@ -13,11 +13,11 @@ echo " -> Extracting files"
 unzip -q "$1" $ASUS_FILES
 
 echo " -> Extracting boot ramdisk"
-python "$ANDROID_BUILD_TOP/system/core/mkbootimg/unpackbootimg" -i boot.img &> /dev/null || :
+"$SOURCE_DIR/unpackbootimg.py" boot.img
 
 echo " -> Unpacking boot ramdisk"
 mkdir ramdisk && cd ramdisk
-cat ../boot.img-ramdisk.gz | gunzip | cpio -Vid --quiet
+cat ../ramdisk.img | gunzip | cpio -Vid --quiet
 cd "$TEMP_DIR"
 
 echo " -> Copying files"
