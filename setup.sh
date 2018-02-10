@@ -6,12 +6,12 @@ export TARGET_DIR="$SOURCE_DIR/proprietary"
 export ASUS_VERSION="UL-K013-WW-12.10.1.36-user"
 ASUS_DOWNLOAD="$ASUS_VERSION.zip"
 ASUS_DOWNLOAD_URL="http://dlcdnet.asus.com/pub/ASUS/EeePAD/ME176C/$ASUS_DOWNLOAD"
-ASUS_DOWNLOAD_MD5="60ba4a2068e4e8140a6c2accb7c83d19"
+ASUS_DOWNLOAD_SHA1="73255a5d4c87998ab90fbd2606317753ad1cc4f7"
 
 export CHROMEOS_VERSION="chromeos_9901.66.0_eve_recovery_stable-channel_mp"
 CHROMEOS_DOWNLOAD="$CHROMEOS_VERSION.bin.zip"
 CHROMEOS_DOWNLOAD_URL="https://dl.google.com/dl/edgedl/chromeos/recovery/$CHROMEOS_DOWNLOAD"
-CHROMEOS_DOWNLOAD_MD5="fb1b746a3e41e03c76dc0046cb6e918e"
+CHROMEOS_DOWNLOAD_SHA1="372bd1a33e4d1399b67bc6bc7a438604b8b6d16e"
 
 # Fail if an error occurs
 set -e
@@ -19,17 +19,17 @@ set -e
 function download {
     file="$1"
     url="$2"
-    md5="$3 $file"
+    sha1="$3 $file"
 
-    # Check if md5sum matches local file
-    md5sum -c <<< "$md5" 2> /dev/null && return
+    # Check if sha1sum matches local file
+    sha1sum -c <<< "$sha1" 2> /dev/null && return
 
     # Download file
     echo "Downloading $file..."
     curl -Lo $file "$url"
 
     # Check again if new file matches md5sum
-    md5sum -c <<< "$md5" && return
+    sha1sum -c <<< "$sha1" && return
 
     # Remove invalid file
     rm -f "$file"
@@ -40,8 +40,8 @@ function download {
 }
 
 echo "Downloading files..."
-download "$ASUS_DOWNLOAD" "$ASUS_DOWNLOAD_URL" "$ASUS_DOWNLOAD_MD5"
-download "$CHROMEOS_DOWNLOAD" "$CHROMEOS_DOWNLOAD_URL" "$CHROMEOS_DOWNLOAD_MD5"
+download "$ASUS_DOWNLOAD" "$ASUS_DOWNLOAD_URL" "$ASUS_DOWNLOAD_SHA1"
+download "$CHROMEOS_DOWNLOAD" "$CHROMEOS_DOWNLOAD_URL" "$CHROMEOS_DOWNLOAD_SHA1"
 
 echo "Deleting old files"
 rm -rf "$TARGET_DIR"
