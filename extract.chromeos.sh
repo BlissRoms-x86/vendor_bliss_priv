@@ -16,7 +16,7 @@ echo " -> Mounting recovery image"
 loop_dev=$(sudo losetup -r -f --show --partscan "$CHROMEOS_EXTRACTED")
 
 mkdir chromeos
-sudo mount "${loop_dev}p3" chromeos
+sudo mount -r "${loop_dev}p3" chromeos
 
 mkdir vendor
 sudo mount -r "chromeos/opt/google/containers/android/vendor.raw.img" vendor
