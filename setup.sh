@@ -8,10 +8,10 @@ ASUS_DOWNLOAD="$ASUS_VERSION.zip"
 ASUS_DOWNLOAD_URL="http://dlcdnet.asus.com/pub/ASUS/EeePAD/ME176C/$ASUS_DOWNLOAD"
 ASUS_DOWNLOAD_SHA1="73255a5d4c87998ab90fbd2606317753ad1cc4f7"
 
-export CHROMEOS_VERSION="chromeos_9901.66.0_eve_recovery_stable-channel_mp"
+export CHROMEOS_VERSION="chromeos_10176.76.0_eve_recovery_stable-channel_mp"
 CHROMEOS_DOWNLOAD="$CHROMEOS_VERSION.bin.zip"
 CHROMEOS_DOWNLOAD_URL="https://dl.google.com/dl/edgedl/chromeos/recovery/$CHROMEOS_DOWNLOAD"
-CHROMEOS_DOWNLOAD_SHA1="372bd1a33e4d1399b67bc6bc7a438604b8b6d16e"
+CHROMEOS_DOWNLOAD_SHA1="68b6f0eef796363cc67f5836de581f70ea62e19a"
 
 # Fail if an error occurs
 set -e
