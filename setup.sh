@@ -13,6 +13,10 @@ CHROMEOS_DOWNLOAD="$CHROMEOS_VERSION.bin.zip"
 CHROMEOS_DOWNLOAD_URL="https://dl.google.com/dl/edgedl/chromeos/recovery/$CHROMEOS_DOWNLOAD"
 CHROMEOS_DOWNLOAD_SHA1="68b6f0eef796363cc67f5836de581f70ea62e19a"
 
+LENOVO_DOWNLOAD="gwuj26ww.exe"
+LENOVO_DOWNLOAD_URL="https://download.lenovo.com/pccbbs/mobiles/$LENOVO_DOWNLOAD"
+LENOVO_DOWNLOAD_SHA1="6585c2e55904d2614ad6c1bfa0e7021335a0939d"
+
 # Fail if an error occurs
 set -e
 
@@ -42,6 +46,7 @@ function download {
 echo "Downloading files..."
 download "$ASUS_DOWNLOAD" "$ASUS_DOWNLOAD_URL" "$ASUS_DOWNLOAD_SHA1"
 download "$CHROMEOS_DOWNLOAD" "$CHROMEOS_DOWNLOAD_URL" "$CHROMEOS_DOWNLOAD_SHA1"
+download "$LENOVO_DOWNLOAD" "$LENOVO_DOWNLOAD_URL" "$LENOVO_DOWNLOAD_SHA1"
 
 echo "Deleting old files"
 rm -rf "$TARGET_DIR"
@@ -55,6 +60,9 @@ echo "Processing $ASUS_DOWNLOAD"
 
 echo "Processing $CHROMEOS_DOWNLOAD"
 "$SOURCE_DIR/extract.chromeos.sh" "$SOURCE_DIR/$CHROMEOS_DOWNLOAD"
+
+echo "Processing $LENOVO_DOWNLOAD"
+"$SOURCE_DIR/extract.lenovo.sh" "$SOURCE_DIR/$LENOVO_DOWNLOAD"
 
 rm -r "$TEMP_DIR"
 echo "Done"
