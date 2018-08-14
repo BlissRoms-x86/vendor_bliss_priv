@@ -17,6 +17,10 @@ LENOVO_DOWNLOAD="gwuj26ww.exe"
 LENOVO_DOWNLOAD_URL="https://download.lenovo.com/pccbbs/mobiles/$LENOVO_DOWNLOAD"
 LENOVO_DOWNLOAD_SHA1="6585c2e55904d2614ad6c1bfa0e7021335a0939d"
 
+MEDIASDK_DOWNLOAD="0d2d734505e5237b845a5cef7a817153377e3c6d.tar.gz"
+MEDIASDK_DOWNLOAD_URL="https://github.com/xuguangxin/mediasdk_release/archive/$MEDIASDK_OMX_DOWNLOAD"
+MEDIASDK_DOWNLOAD_SHA1="11dd60e902f1d6419ee0da292f6829fbae3a319c"
+
 # Fail if an error occurs
 set -e
 
@@ -47,6 +51,7 @@ echo "Downloading files..."
 download "$ASUS_DOWNLOAD" "$ASUS_DOWNLOAD_URL" "$ASUS_DOWNLOAD_SHA1"
 download "$CHROMEOS_DOWNLOAD" "$CHROMEOS_DOWNLOAD_URL" "$CHROMEOS_DOWNLOAD_SHA1"
 download "$LENOVO_DOWNLOAD" "$LENOVO_DOWNLOAD_URL" "$LENOVO_DOWNLOAD_SHA1"
+download "$MEDIASDK_DOWNLOAD" "$MEDIASDK_DOWNLOAD_URL" "$MEDIASDK_DOWNLOAD_SHA1"
 
 echo "Deleting old files"
 rm -rf "$TARGET_DIR"
@@ -63,6 +68,9 @@ echo "Processing $CHROMEOS_DOWNLOAD"
 
 echo "Processing $LENOVO_DOWNLOAD"
 "$SOURCE_DIR/extract.lenovo.sh" "$SOURCE_DIR/$LENOVO_DOWNLOAD"
+
+echo "Processing $MEDIASDK_DOWNLOAD"
+"$SOURCE_DIR/extract.mediasdk.sh" "$SOURCE_DIR/$MEDIASDK_DOWNLOAD"
 
 rm -r "$TEMP_DIR"
 echo "Done"
