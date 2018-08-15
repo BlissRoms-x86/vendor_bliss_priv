@@ -56,6 +56,7 @@ download "$MEDIASDK_DOWNLOAD" "$MEDIASDK_DOWNLOAD_URL" "$MEDIASDK_DOWNLOAD_SHA1"
 echo "Deleting old files"
 rm -rf "$TARGET_DIR"
 mkdir -p "$TARGET_DIR/firmware"
+mkdir -p "$TARGET_DIR/media"
 
 export TEMP_DIR=`mktemp -d`
 cd "$TEMP_DIR"

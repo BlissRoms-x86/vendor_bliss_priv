@@ -24,7 +24,7 @@ echo " -> Copying files"
 cp ramdisk/sbin/upi_ug31xx "$TARGET_DIR"
 cp "$PUBLIC_KEY" "$TARGET_DIR/asus.x509.pem"
 mkdir "$TARGET_DIR/firmware/brcm" && cp "$WIFI_NVRAM" "$TARGET_DIR/firmware/brcm/brcmfmac43362-sdio.txt"
-cp "$MEDIA_PROFILES" "$TARGET_DIR"
+cp "$MEDIA_PROFILES" "$TARGET_DIR/media"
 cp "$BLUETOOTH_FIRMWARE" "$TARGET_DIR/firmware"
 
 echo " -> Patching files"

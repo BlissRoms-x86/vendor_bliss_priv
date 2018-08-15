@@ -25,7 +25,7 @@ echo " -> Copying files"
 cd vendor
 
 # Widevine DRM
-cp lib/mediadrm/libwvdrmengine.so "$TARGET_DIR"
+cp lib/mediadrm/libwvdrmengine.so "$TARGET_DIR/media"
 
 # Native bridge
 mkdir -p "$TARGET_DIR/houdini/"{bin,etc,lib}
