@@ -1,4 +1,4 @@
-LOCAL_PATH := vendor/asus/me176c/proprietary
+LOCAL_PATH := vendor/asus/K013/proprietary
 
 # ASUS public key
 PRODUCT_EXTRA_RECOVERY_KEYS += $(LOCAL_PATH)/asus
@@ -24,7 +24,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.dalvik.vm.isa.arm=x86 \
     ro.enable.native.bridge.exec=1
 
-ADDITIONAL_DEFAULT_PROPERTIES += \
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.dalvik.vm.native.bridge=libhoudini.so
 
 PRODUCT_COPY_FILES += \
