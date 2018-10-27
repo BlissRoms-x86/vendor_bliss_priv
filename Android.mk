@@ -20,8 +20,9 @@ TARGET_KERNEL_DEFCONFIG := $(LOCAL_BUILT_MODULE)
 
 # Download and extract proprietary files
 .PHONY: proprietary
-proprietary:
-	$(LOCAL_PATH)/setup.sh $(abspath $(LOCAL_PATH))
+proprietary: $(UPDATE_ENGINE_APPLIER)
+	UPDATE_ENGINE_APPLIER=$(abspath $(UPDATE_ENGINE_APPLIER)) \
+		$(LOCAL_PATH)/setup.sh $(abspath $(LOCAL_PATH))
 
 proprietary: LOCAL_PATH := $(LOCAL_PATH)
 proprietary: UPDATE_ENGINE_APPLIER := $(HOST_OUT_EXECUTABLES)/update_engine_applier

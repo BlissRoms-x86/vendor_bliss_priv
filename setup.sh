@@ -8,10 +8,11 @@ ASUS_DOWNLOAD="$ASUS_VERSION.zip"
 ASUS_DOWNLOAD_URL="http://dlcdnet.asus.com/pub/ASUS/EeePAD/ME176C/$ASUS_DOWNLOAD"
 ASUS_DOWNLOAD_SHA256="b19a2901bd5920b58bd3693243a9edf433656bcee8f454637ee401e28c096469"
 
-export CHROMEOS_VERSION="chromeos_10176.76.0_eve_recovery_stable-channel_mp"
-CHROMEOS_DOWNLOAD="$CHROMEOS_VERSION.bin.zip"
-CHROMEOS_DOWNLOAD_URL="https://dl.google.com/dl/edgedl/chromeos/recovery/$CHROMEOS_DOWNLOAD"
-CHROMEOS_DOWNLOAD_SHA256="00b3c9406effd0f3fe83a65c7f5440eb677bd9bdec35e0c2fe048045e3aebc2f"
+CHROMEOS_CHANNEL="canary"
+CHROMEOS_VERSION="11196.0.0"
+CHROMEOS_DOWNLOAD="chromeos_${CHROMEOS_VERSION}_eve_$CHROMEOS_CHANNEL-channel_full_mp.bin-6fc7a89e4795297c76e32385aa4fd5e5.signed"
+CHROMEOS_DOWNLOAD_URL="https://storage.googleapis.com/chromeos-releases-public/$CHROMEOS_CHANNEL-channel/$CHROMEOS_CHANNEL-channel/$CHROMEOS_VERSION/$CHROMEOS_DOWNLOAD"
+export CHROMEOS_DOWNLOAD_SHA256="db4a84069a38f950f6374065dfc905c26f26e8fc22abb6ea6b6bf1588aaa9335"
 
 LENOVO_DOWNLOAD="gwuj26ww.exe"
 LENOVO_DOWNLOAD_URL="https://download.lenovo.com/pccbbs/mobiles/$LENOVO_DOWNLOAD"
@@ -23,17 +24,18 @@ set -e
 function download {
     file="$1"
     url="$2"
-    sha1="$3 $file"
+    sha256="$3 $file"
 
-    # Check if sha1sum matches local file
-    sha256sum -c <<< "$sha1" 2> /dev/null && return
+    # Check if sha256sum matches local file
+    sha256sum -c <<< "$sha256" 2> /dev/null && return
 
     # Download file
     echo "Downloading $file..."
+    echo "$url"
     curl -Lo $file "$url"
 
     # Check again if new file matches md5sum
-    sha1sum -c <<< "$sha1" && return
+    sha256sum -c <<< "$sha256" && return
 
     # Remove invalid file
     rm -f "$file"
