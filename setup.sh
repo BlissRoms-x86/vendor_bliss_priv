@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-
-export SOURCE_DIR="$PWD"
+export SOURCE_DIR="$1"
 export TARGET_DIR="$SOURCE_DIR/proprietary"
 
 export ASUS_VERSION="UL-K013-WW-12.10.1.36-user"
@@ -44,6 +43,7 @@ function download {
 }
 
 echo "Downloading files..."
+cd "$SOURCE_DIR"
 download "$ASUS_DOWNLOAD" "$ASUS_DOWNLOAD_URL" "$ASUS_DOWNLOAD_SHA1"
 download "$CHROMEOS_DOWNLOAD" "$CHROMEOS_DOWNLOAD_URL" "$CHROMEOS_DOWNLOAD_SHA1"
 download "$LENOVO_DOWNLOAD" "$LENOVO_DOWNLOAD_URL" "$LENOVO_DOWNLOAD_SHA1"
