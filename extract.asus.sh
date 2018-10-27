@@ -13,7 +13,7 @@ echo " -> Extracting files"
 unzip -q "$1" $ASUS_FILES
 
 echo " -> Extracting boot ramdisk"
-"$SOURCE_DIR/unpackbootimg.py" boot.img
+"$SCRIPT_DIR/unpackbootimg.py" boot.img
 
 echo " -> Unpacking boot ramdisk"
 mkdir ramdisk && cd ramdisk

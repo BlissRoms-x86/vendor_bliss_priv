@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-export SOURCE_DIR="$1"
-export TARGET_DIR="$SOURCE_DIR/proprietary"
+export SCRIPT_DIR="$1"
+export SOURCE_DIR="$1/source"
+export TARGET_DIR="$1/proprietary"
 
 export ASUS_VERSION="UL-K013-WW-12.10.1.36-user"
 ASUS_DOWNLOAD="$ASUS_VERSION.zip"
@@ -57,13 +58,13 @@ export TEMP_DIR=`mktemp -d`
 cd "$TEMP_DIR"
 
 echo "Processing $ASUS_DOWNLOAD"
-"$SOURCE_DIR/extract.asus.sh" "$SOURCE_DIR/$ASUS_DOWNLOAD"
+"$SCRIPT_DIR/extract.asus.sh" "$SOURCE_DIR/$ASUS_DOWNLOAD"
 
 echo "Processing $CHROMEOS_DOWNLOAD"
-"$SOURCE_DIR/extract.chromeos.sh" "$SOURCE_DIR/$CHROMEOS_DOWNLOAD"
+"$SCRIPT_DIR/extract.chromeos.sh" "$SOURCE_DIR/$CHROMEOS_DOWNLOAD"
 
 echo "Processing $LENOVO_DOWNLOAD"
-"$SOURCE_DIR/extract.lenovo.sh" "$SOURCE_DIR/$LENOVO_DOWNLOAD"
+"$SCRIPT_DIR/extract.lenovo.sh" "$SOURCE_DIR/$LENOVO_DOWNLOAD"
 
 rm -r "$TEMP_DIR"
 echo "Done"

@@ -1,5 +1,3 @@
-*
-!.gitignore
-!*.sh
-!*.py
-!*.mk
+acpi
+source
+proprietary
