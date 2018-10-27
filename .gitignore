@@ -1,3 +1,3 @@
 acpi
-source
-proprietary
+source/**
+proprietary/**
