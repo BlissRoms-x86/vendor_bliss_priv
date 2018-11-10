@@ -36,6 +36,7 @@ function download {
 }
 
 echo "Downloading files..."
+mkdir source && mkdir proprietary
 cd "$SOURCE_DIR"
 download "$CHROMEOS_DOWNLOAD" "$CHROMEOS_DOWNLOAD_URL" "$CHROMEOS_DOWNLOAD_SHA256"
 
