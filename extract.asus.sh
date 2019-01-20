@@ -2,9 +2,8 @@
 
 BLUETOOTH_FIRMWARE="system/etc/firmware/BCM2076B1_002.002.004.0132.0141_reduced_2dB.hcd"
 WIFI_NVRAM="system/etc/nvram.txt"
-MEDIA_PROFILES="system/etc/media_profiles.xml"
 PUBLIC_KEY="META-INF/com/android/otacert"
-ASUS_FILES="$PUBLIC_KEY boot.img $WIFI_NVRAM $MEDIA_PROFILES $BLUETOOTH_FIRMWARE"
+ASUS_FILES="$PUBLIC_KEY boot.img $WIFI_NVRAM $BLUETOOTH_FIRMWARE"
 
 # Fail if an error occurs
 set -e
@@ -24,7 +23,6 @@ echo " -> Copying files"
 cp ramdisk/sbin/upi_ug31xx "$TARGET_DIR"
 cp "$PUBLIC_KEY" "$TARGET_DIR/asus.x509.pem"
 mkdir "$TARGET_DIR/firmware/brcm" && cp "$WIFI_NVRAM" "$TARGET_DIR/firmware/brcm/brcmfmac43362-sdio.txt"
-cp "$MEDIA_PROFILES" "$TARGET_DIR/media"
 cp "$BLUETOOTH_FIRMWARE" "$TARGET_DIR/firmware/brcm/BCM.hcd"
 
 echo " -> Patching files"
