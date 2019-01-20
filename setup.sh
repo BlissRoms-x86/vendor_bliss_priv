@@ -58,8 +58,7 @@ download "$MICROCODE_DOWNLOAD" "$MICROCODE_DOWNLOAD_URL" "$MICROCODE_DOWNLOAD_SH
 
 echo "Deleting old files"
 rm -rf "$TARGET_DIR"
-mkdir -p "$TARGET_DIR/firmware"
-mkdir -p "$TARGET_DIR/media"
+mkdir "$TARGET_DIR"
 
 export TEMP_DIR=`mktemp -d`
 cd "$TEMP_DIR"

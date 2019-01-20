@@ -29,11 +29,12 @@ echo " -> Copying files"
 cd vendor
 
 # Widevine DRM
-cp bin/hw/android.hardware.drm@1.1-service.widevine "$TARGET_DIR/media"
-cp etc/init/android.hardware.drm@1.1-service.widevine.rc "$TARGET_DIR/media"
-cp lib/libwvhidl.so "$TARGET_DIR/media"
+mkdir "$TARGET_DIR/drm"
+cp bin/hw/android.hardware.drm@1.1-service.widevine "$TARGET_DIR/drm"
+cp etc/init/android.hardware.drm@1.1-service.widevine.rc "$TARGET_DIR/drm"
+cp lib/libwvhidl.so "$TARGET_DIR/drm"
 
-# Native bridge
+# Native bridge (Houdini)
 mkdir -p "$TARGET_DIR/houdini/"{bin,etc,lib}
 cp bin/houdini "$TARGET_DIR/houdini/bin"
 cp -r etc/binfmt_misc "$TARGET_DIR/houdini/etc"

@@ -10,9 +10,9 @@ PRODUCT_COPY_FILES += \
 
 # Widevine DRM
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/media/android.hardware.drm@1.1-service.widevine:system/vendor/bin/hw/android.hardware.drm@1.1-service.widevine:widevine \
-    $(LOCAL_PATH)/media/android.hardware.drm@1.1-service.widevine.rc:system/vendor/etc/init/android.hardware.drm@1.1-service.widevine.rc:widevine \
-    $(LOCAL_PATH)/media/libwvhidl.so:system/vendor/lib/libwvhidl.so:widevine
+    $(LOCAL_PATH)/drm/android.hardware.drm@1.1-service.widevine:system/vendor/bin/hw/android.hardware.drm@1.1-service.widevine:widevine \
+    $(LOCAL_PATH)/drm/android.hardware.drm@1.1-service.widevine.rc:system/vendor/etc/init/android.hardware.drm@1.1-service.widevine.rc:widevine \
+    $(LOCAL_PATH)/drm/libwvhidl.so:system/vendor/lib/libwvhidl.so:widevine
 
 # ARM Native bridge (Houdini)
 PRODUCT_PROPERTY_OVERRIDES += \
