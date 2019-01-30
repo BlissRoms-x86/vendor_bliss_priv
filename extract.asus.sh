@@ -26,7 +26,7 @@ cp "$PUBLIC_KEY" "$TARGET_DIR/asus.x509.pem"
 # Firmware
 mkdir "$TARGET_DIR/firmware"
 mkdir "$TARGET_DIR/firmware/brcm" && cp "$WIFI_NVRAM" "$TARGET_DIR/firmware/brcm/brcmfmac43362-sdio.txt"
-cp "$BLUETOOTH_FIRMWARE" "$TARGET_DIR/firmware/brcm/BCM.hcd"
+cp "$BLUETOOTH_FIRMWARE" "$TARGET_DIR/firmware/brcm/BCM2076B1.hcd"
 
 echo " -> Patching files"
 # /config partition is used by configfs so we move it to /vnddat (vendor data)
