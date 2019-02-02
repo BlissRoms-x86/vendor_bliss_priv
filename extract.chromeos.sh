@@ -1,15 +1,26 @@
 #!/usr/bin/env bash
+CHROMEOS_EXTRACTED="$CHROMEOS_RECOVERY.bin"
 CHROMEOS_ANDROID_VENDOR_IMAGE="opt/google/containers/android/vendor.raw.img"
 
 # Fail if an error occurs
 set -e
 
-echo " -> Applying update"
-$UPDATE_ENGINE_APPLIER "$1" "$CHROMEOS_DOWNLOAD_SHA256"
+if [[ -n "$CHROMEOS_RECOVERY" ]]; then
+    echo " -> Extracting recovery image"
+    unzip -q "$1" "$CHROMEOS_EXTRACTED"
+
+    # Setup loop device
+    loop_dev=$(sudo losetup -r -f --show --partscan "$CHROMEOS_EXTRACTED")
+    system_image="${loop_dev}p3"
+else
+    echo " -> Applying update"
+    $UPDATE_ENGINE_APPLIER "$1" "$CHROMEOS_DOWNLOAD_SHA256"
+    system_image=system.img
+fi
 
 echo " -> Mounting system image"
 mkdir chromeos
-sudo mount -r "system.img" chromeos
+sudo mount -r "$system_image" chromeos
 
 mkdir vendor
 sudo mount -r "chromeos/$CHROMEOS_ANDROID_VENDOR_IMAGE" vendor
@@ -18,11 +29,12 @@ echo " -> Copying files"
 cd vendor
 
 # Widevine DRM
-cp bin/hw/android.hardware.drm@1.1-service.widevine "$TARGET_DIR/media"
-cp etc/init/android.hardware.drm@1.1-service.widevine.rc "$TARGET_DIR/media"
-cp lib/libwvhidl.so "$TARGET_DIR/media"
+mkdir "$TARGET_DIR/drm"
+cp bin/hw/android.hardware.drm@1.1-service.widevine "$TARGET_DIR/drm"
+cp etc/init/android.hardware.drm@1.1-service.widevine.rc "$TARGET_DIR/drm"
+cp lib/libwvhidl.so "$TARGET_DIR/drm"
 
-# Native bridge
+# Native bridge (Houdini)
 mkdir -p "$TARGET_DIR/houdini/"{bin,etc,lib}
 cp bin/houdini "$TARGET_DIR/houdini/bin"
 cp -r etc/binfmt_misc "$TARGET_DIR/houdini/etc"
@@ -33,3 +45,4 @@ cd "$TEMP_DIR"
 
 sudo umount vendor
 sudo umount chromeos
+[[ -n "$loop_dev" ]] && sudo losetup -d "$loop_dev" || :
