@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-export SCRIPT_DIR="$1"
-export SOURCE_DIR="$1/source"
-export TARGET_DIR="$1/proprietary"
+
+export SCRIPT_DIR=$PWD
+export SOURCE_DIR=$PWD"/vendor/bliss_priv/source"
+export TARGET_DIR=$PWD"/vendor/bliss_priv/proprietary"
 
 export CHROMEOS_RECOVERY="chromeos_11151.33.0_nocturne_recovery_stable-channel_mp"
 CHROMEOS_DOWNLOAD="$CHROMEOS_RECOVERY.bin.zip"
@@ -42,8 +43,9 @@ function download {
 }
 
 echo "Downloading files..."
-mkdir source && mkdir proprietary
+mkdir "$SOURCE_DIR" && mkdir "$TARGET_DIR"
 cd "$SOURCE_DIR"
+
 download "$CHROMEOS_DOWNLOAD" "$CHROMEOS_DOWNLOAD_URL" "$CHROMEOS_DOWNLOAD_SHA256"
 
 echo "Deleting old files"
@@ -54,7 +56,7 @@ export TEMP_DIR=`mktemp -d`
 cd "$TEMP_DIR"
 
 echo "Processing $CHROMEOS_DOWNLOAD"
-"$SCRIPT_DIR/extract.chromeos.sh" "$SOURCE_DIR/$CHROMEOS_DOWNLOAD"
+"$SCRIPT_DIR/vendor/bliss_priv/extract.chromeos.sh" "$SOURCE_DIR/$CHROMEOS_DOWNLOAD"
 
 rm -r "$TEMP_DIR"
 echo "Done"
