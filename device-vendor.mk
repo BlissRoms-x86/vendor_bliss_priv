@@ -11,6 +11,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.dalvik.vm.isa.arm=x86 \
     ro.enable.native.bridge.exec=1
 
+# Bundle Houdini as ARM on x86 native bridge
+WITH_NATIVE_BRIDGE := true
+
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.dalvik.vm.native.bridge=libhoudini.so
 
